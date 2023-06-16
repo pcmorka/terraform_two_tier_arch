@@ -1,5 +1,3 @@
-/* Here, this Terraform resource will create an Amazon Web Services (AWS) VPC that will have a public subnet with two Availability Zones (AZs) for the web server tier, and two private subnets with two Availability Zones (AZs) for the RDS server tier. The public subnets will have Internet access through an Internet Gateway, while the private subnets will have internet access through a NAT Gateway*/.
-
 #create an Amazon Web Services (AWS) Virtual Private Cloud (a custom VPC )
 resource "aws_vpc" "wk22Project-vpc" {
   cidr_block = var.vpc_cidr
