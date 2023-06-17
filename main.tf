@@ -24,7 +24,7 @@ resource "aws_subnet" "wk22project-pub_sub" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name      = public-subnet
+    Name      = "wk22project-public-subnet"
     Terraform = "true"
   }
 }
@@ -37,7 +37,7 @@ resource "aws_subnet" "wk22project-priv_sub" {
   availability_zone = tolist(data.aws_availability_zones.available.names)[each.value]
 
   tags = {
-    Name      = private-subnet
+    Name      = "wk22project-private-subnet"
     Terraform = "true"
   }
 }
