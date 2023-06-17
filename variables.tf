@@ -1,4 +1,8 @@
-#The variables file defines the input variables for our infrastructure.
+variable "aws_region" {
+  type    = string
+  default = "us-east-1"
+}
+
 variable "vpc_name" {
   description = "VPC Name"
   type        = string
@@ -10,18 +14,20 @@ variable "vpc_cidr" {
   default = "10.10.0.0/16"
 }
 
-variable "az1a" {
-  description = "First public and private subnets Availability Zone(AZ)"
-  type        = string
-  default     = "us-east-1a"
+variable "wk22project-pub_sub" {
+  default = {
+    "wk22project-pub_sub_1" = 1
+    "wk22project-pub_sub_2" = 2
+  }
 }
 
-variable "az1b" {
-  description = "Second public and private subnets Availability Zone(AZ)"
-  type        = string
-  default     = "us-east-1b"
-}
 
+variable "wk22project-priv_sub" {
+  default = {
+    "wk22project-priv_sub_1" = 1
+    "wk22project-priv_sub_2" = 2
+  }
+}
 
 variable "instance_type" {
   type    = string
@@ -46,4 +52,9 @@ variable "db_password" {
   type        = string
   default     = "dbpassword"
   sensitive   = true
+}
+
+variable "key_name" {
+  type    = string
+  default = "key_name"
 }
