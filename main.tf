@@ -108,12 +108,13 @@ resource "aws_nat_gateway" "wk22project-nat-gw" {
   depends_on    = [aws_subnet.wk22project-pub_sub]
   allocation_id = aws_eip.wk22project-eip1.id
   subnet_id     = aws_subnet.wk22project-pub_sub[""wk22project-pub_sub_1"].id
-  tags = {
+  
+   tags = {
     Name = "wk22project-nat-gw"
   }
 }
-#create security groups that allows inbound traffic from the internet
 
+#create security groups that allows inbound traffic from the internet
 #Web Server Security Group
 resource "aws_security_group" "wk22project-webserver-sg" {
   name   = "wk22project-webserver-sg"
@@ -154,7 +155,8 @@ resource "aws_security_group" "wk22project-webserver-sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  tags = {
+  
+   tags = {
     Name = "wk22project-webserver-sg"
    }
  }
@@ -164,7 +166,8 @@ resource "aws_security_group" "wk22project-db-sg" {
   name   = "wk22project-db-sg"
   description = "allow traffic from Webserver Tier & SSH" 
   vpc_id = aws_vpc.wk22project-vpc.id
-  ingress {
+ 
+ ingress {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
@@ -177,6 +180,7 @@ resource "aws_security_group" "wk22project-db-sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
   ingress {
     from_port   = 80
     to_port     = 80
@@ -191,40 +195,36 @@ resource "aws_security_group" "wk22project-db-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
+   tags = {
     Name = "wk22project-db-sg"
    }
  }
  
  # Create database subnet group for RDS instance
-
 resource "aws_db_subnet_group" "wk22project-dbsubnet-grp" {
   name       = "wk22project-dbsubnet-grp"
   subnet_ids = [aws_subnet.wk22project-priv_sub["wk22project-priv_sub_1"].id, aws_subnet.wk22project-priv_sub["wk22project-priv_sub_2"].id]
 
- tags = {
+  tags = {
     Name = "wk22project db subnet group"
   }
 }
 
 # Create AWS Database Instance (RDS MySQL Instance)
-
 resource "aws_db_instance" "wk22project-db-instance" {
   allocated_storage = 10
   db_name           = "wk22project-db-instance"
   engine            = "mysql"
   engine_version    = "5.7"
   instance_class    = "db.t2.micro"
-
-  #Set Database login credentials for the RDS Instance
   username               = "db_username"
   password               = "db_password"
   vpc_security_group_ids = [aws_security_group.wk22project-db-sg.id, aws_security_group.wk22project-webserver-sg.id]
   db_subnet_group_name   = aws_db_subnet_group.wk22project-dbsubnet-grp.name 
   skip_final_snapshot    = true
 }
-#create a launch template for an EC2 instance using auto scaling group
 
+#create a launch template for an EC2 instance using auto scaling group
 resource "aws_launch_template" "wk22project-webserver" {
   name                   = "wk22project-launch-template"
   image_id               = var.ami_id
@@ -234,6 +234,7 @@ resource "aws_launch_template" "wk22project-webserver" {
   vpc_security_group_ids = [aws_security_group.wk22project-webserver-sg.id]
   key_name               = var.key_name
   user_data              = file("apache.sh")
+
 
     tags = {
       Name = "apache-webserver"
