@@ -364,9 +364,9 @@ resource "aws_db_subnet_group" "wk22project-db_sub_grp" {
 }
 
 # Create RDS MySQL Instance
-resource "aws_db_instance" "wk22project-db-server" {
+resource "aws_db_instance" "dbserver" {
   allocated_storage      = 10
-  db_name                = "wk22project-db-server"
+  db_name                = "dbserver"
   engine                 = "mysql"
   engine_version         = "5.7"
   instance_class         = "db.t2.micro"
