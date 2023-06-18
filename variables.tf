@@ -1,10 +1,16 @@
-variable "aws_region" {
+variable "instance_type" {
   type    = string
-  default = "us-east-1"
+  default = "t2.micro"
+}
+
+variable "ami_id" {
+  description = "ami id for Amazon Linux 2"
+  type        = string
+  default     = "ami-09988af04120b3591"
 }
 
 variable "vpc_name" {
-  description = "VPC Name"
+  description = "Name for Custom VPC"
   type        = string
   default     = "wk22project_vpc"
 }
@@ -14,47 +20,33 @@ variable "vpc_cidr" {
   default = "10.10.0.0/16"
 }
 
-variable "wk22project-pub_sub" {
-  default = {
-    "wk22project-pub_sub_1" = 1
-    "wk22project-pub_sub_2" = 2
-  }
-}
-
-
-variable "wk22project-priv_sub" {
-  default = {
-    "wk22project-priv_sub_1" = 1
-    "wk22project-priv_sub_2" = 2
-  }
-}
-
-variable "instance_type" {
-  type    = string
-  default = "t2.micro"
-}
-
-variable "ami_id" {
-  description = "ami id for Amazon Linux 2 Kernel"
+variable "az1a" {
+  description = "First AZ for public and private subnets"
   type        = string
-  default     = "ami-09988af04120b3591"
+  default     = "us-east-1a"
+}
+
+variable "az1b" {
+  description = "Second AZ for public and private subnets"
+  type        = string
+  default     = "us-east-1b"
 }
 
 variable "db_username" {
-  description = "Database username for the RDS Instance"
+  description = "Database  username"
   type        = string
-  default     = "dbusername"
+  default     = "db_name"
   sensitive   = true
 }
 
 variable "db_password" {
-  description = "Database password for the RDS Instance"
+  description = "Database password"
   type        = string
-  default     = "dbpassword"
+  default     = "db_password"
   sensitive   = true
 }
 
-variable "key_name" {
+variable "vpc_security_group_ids" {
   type    = string
-  default = "key_name"
+  default = "security_group_ids"
 }
